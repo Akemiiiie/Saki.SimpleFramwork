@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Authorization\" />
+    <Folder Include="EventHandlers\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Managers\" />
+    <Folder Include="Operlog\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LT.Framework.Exam.Application.Contract\LT.Framework.Exam.Application.Contract.csproj" />
+    <ProjectReference Include="..\Saki.AutoFac\Saki.Framework.AutoFac.csproj" />
+    <ProjectReference Include="..\Saki.IBaseRepository\Saki.Framework.IBaseRepository.csproj" />
+    <ProjectReference Include="..\Saki.SqlSugar\Saki.SqlSugar.csproj" />
+  </ItemGroup>
+
+</Project>

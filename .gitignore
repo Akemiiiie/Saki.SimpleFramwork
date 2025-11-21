@@ -1,0 +1,8 @@
+# Ignore bin directories
+**/bin/
+# Optional: Ignore obj directories as well
+**/obj/
+# 屏蔽svn
+**/.svn/
+**/.vs/
+**/wwwroot/

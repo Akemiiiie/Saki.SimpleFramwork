@@ -94,6 +94,7 @@ namespace LT.Framework.Application.Services
         /// </summary>
         /// <param name="fileId"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         public async Task<IActionResult> FileDownload([FromBody] string fileId)
         {
             // 从数据库中获取文件上传记录
