@@ -33,11 +33,21 @@ namespace Examination.Filter
                 {
                     var dataProp = objectResult.Value.GetType().GetProperty("Data");
                     var dataVal = dataProp.GetValue(objectResult.Value);
-                    var newData = DateTimeExtensions.AddExtensions(dataVal);
-                    context.Result = new ObjectResult(ApiResponse<object>.Success(newData))
+                    // 返回的是空数据，也就是说仅通用的响应体
+                    // 一般来说是封装后的错误信息
+                    if (dataVal == null)
                     {
-                        StatusCode = objectResult.StatusCode
-                    };
+                        // 则直接返回已经封装的内容
+                        context.Result = new ObjectResult(objectResult.Value);
+                    }
+                    else 
+                    {
+                        var newData = DateTimeExtensions.AddExtensions(dataVal);
+                        context.Result = new ObjectResult(ApiResponse<object>.Success(newData))
+                        {
+                            StatusCode = objectResult.StatusCode
+                        };
+                    }
                     await next();
                     return;
                 }

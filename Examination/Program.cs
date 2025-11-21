@@ -5,16 +5,23 @@ using Examination.Middleware;
 using Examination.Startups;
 using Mapster;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Panda.DynamicWebApi;
 using Saki.BaseTemplate.ConfigerOptions;
+using Saki.Framework.AppBase;
 using Saki.Framework.AppBase.ConfigerOptions;
+using Saki.Framework.AppBase.Enums;
 using Saki.Framework.Mapster;
+using SqlSugar.Extensions;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,12 +66,31 @@ builder.Services.AddAuthentication(options =>
     {
         OnMessageReceived = context =>
         {
-            var accessToken = context.Request.Cookies[builder.Configuration["JwtSettings:CookieName"]];
-            if (!string.IsNullOrEmpty(accessToken))
+            var endpoint = context.HttpContext.GetEndpoint();
+            var allowAnonymous = endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() != null;
+            // 只有非匿名接口才从 Cookie 读取 Token
+            if (!allowAnonymous)
             {
-                context.Token = accessToken;
+                var accessToken = context.Request.Cookies[builder.Configuration["JwtSettings:CookieName"]];
+                if (!string.IsNullOrEmpty(accessToken))
+                {
+                    context.Token = accessToken;
+                }
             }
             return Task.CompletedTask;
+        },
+        OnChallenge = context =>
+        {
+            // 默认会自动写 WWW-Authenticate 头，还会终止响应，这里把它关掉
+            context.HandleResponse();
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            context.Response.ContentType = "application/json";
+            var res = new ApiResponse<object> { Code = ErrorEnum.UnauthorizedAccess.ObjToInt(), Message = "未授权访问，请重新登录" };
+            // 关键：拿到全局 MVC 的 JSON 配置
+            var jsonOptions = context.HttpContext.RequestServices
+                .GetRequiredService<IOptions<JsonOptions>>().Value;
+            var json = JsonSerializer.Serialize(res, jsonOptions.JsonSerializerOptions);
+            return context.Response.WriteAsync(json);
         }
     };
 });
@@ -136,6 +162,7 @@ builder.Services.AddControllers(opt =>
 {
     opt.Filters.Add<ApiResponseFilter>(); // 注册过滤器
 });
+
 var allowedOrigins = builder.Configuration.GetSection("CorsSettings:AllowedOrigins").Get<string[]>();
 // 添加跨域策略
 builder.Services.AddCors(options =>

@@ -142,7 +142,6 @@ namespace LT.Framework.Exam.Application.Services
                 var file = await _fileService.GetFileInfo(exam.BGFileId);
                 examInfo.BGFileName = file?.FileName ?? null;
             }
-
             List<ExamQuestionEntity> questions = await _examQuestionRepository.AsQueryable().Where(t => t.ExamId == exam.Id.ToString()).OrderBy(t => t.QuestionNumber).ToListAsync();
             var questionDict = questions.Adapt<List<ExamQuestionOutputDto>>();
             ExamDetailOutputDto dto = new ExamDetailOutputDto()
@@ -345,7 +344,6 @@ namespace LT.Framework.Exam.Application.Services
             }
             var flag = await _examAnswerRepository.AddRange(examAnswers);
             // 是否正确
-            // todo 验证答案是否正确并计算得分
             if (flag)
             {
                 return Success(
@@ -366,7 +364,7 @@ namespace LT.Framework.Exam.Application.Services
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
-        public async Task<IActionResult> CommitExamQuestion(ExamAnswerCommitInputDto dto)
+        public async Task<IActionResult> CommitExamAnswer(ExamAnswerCommitInputDto dto)
         {
             // 答题记录
             List<ExamAnswerEntity> details = dto.AnswerList.Adapt<List<ExamAnswerEntity>>();
@@ -401,7 +399,9 @@ namespace LT.Framework.Exam.Application.Services
             }
             recordEntity.Score = details.Sum(t => t.Score ?? 0);
             await _examRecordRepository.TranCompletedExam(recordEntity, details);
-            return Success("保存成功");
+            var output = recordEntity.Adapt<ExamRecordAddOutputDto>();
+            output.ExamAnswers = details.Adapt<List<ExamAnswerAddOutputDto>>();
+            return Success(output);
         }
 
         /// <summary>
