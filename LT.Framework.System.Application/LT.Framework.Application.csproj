@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LT.Framework.Exam.System.Contract\LT.Framework.Contract.csproj" />
+    <ProjectReference Include="..\LT.Framework.System.DbCore\LT.Framework.DbCore.csproj" />
+    <ProjectReference Include="..\LT.Framework.System.Domain.Shared\LT.Framework.Domain.Shared.csproj" />
+    <ProjectReference Include="..\Saki.AppBase\Saki.Framework.AppBase.csproj" />
+    <ProjectReference Include="..\Saki.AutoFac\Saki.Framework.AutoFac.csproj" />
+    <ProjectReference Include="..\Saki.DynamicWebApi\Saki.Framework.DynamicWebApi.csproj" />
+    <ProjectReference Include="..\Saki.Framework.Mapster\Saki.Framework.Mapster.csproj" />
+  </ItemGroup>
+
+</Project>
