@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Saki.AutoFac\Saki.Framework.AutoFac.csproj" />
+    <ProjectReference Include="..\Saki.IBaseRepository\Saki.Framework.IBaseRepository.csproj" />
+    <ProjectReference Include="..\Saki.SqlSugar\Saki.SqlSugar.csproj" />
+  </ItemGroup>
+
+</Project>

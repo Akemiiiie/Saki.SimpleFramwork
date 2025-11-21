@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LT.Framework.Exam.System.Contract\LT.Framework.Contract.csproj" />
+    <ProjectReference Include="..\LT.Framework.System.Domain\LT.Framework.Domain.csproj" />
+    <ProjectReference Include="..\Saki.AppBase\Saki.Framework.AppBase.csproj" />
+    <ProjectReference Include="..\Saki.BaseRepository\Saki.Framework.BaseRepository.csproj" />
+  </ItemGroup>
+
+</Project>
