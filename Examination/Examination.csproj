@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>a66ebb6c-7ecc-4102-8677-eac08133ed0b</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>.</DockerfileContext>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn><!-- 忽略未注释的警告 -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="NLog.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="index.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.21" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="8.0.19" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LT.Framework.Exam.Application\LT.Framework.Exam.Application.csproj" />
+    <ProjectReference Include="..\LT.Framework.System.Application\LT.Framework.Application.csproj" />
+    <ProjectReference Include="..\LT.Framework.System.Domain.Shared\LT.Framework.Domain.Shared.csproj" />
+    <ProjectReference Include="..\Saki.AppBase\Saki.Framework.AppBase.csproj" />
+    <ProjectReference Include="..\Saki.AutoFac\Saki.Framework.AutoFac.csproj" />
+    <ProjectReference Include="..\Saki.Framework.Mapster\Saki.Framework.Mapster.csproj" />
+    <ProjectReference Include="..\Saki.IBaseRepository\Saki.Framework.IBaseRepository.csproj" />
+    <ProjectReference Include="..\Saki.Logger\Saki.Framework.Logger.csproj" />
+    <ProjectReference Include="..\Saki.MiniProfiler\Saki.Framework.MiniProfiler.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

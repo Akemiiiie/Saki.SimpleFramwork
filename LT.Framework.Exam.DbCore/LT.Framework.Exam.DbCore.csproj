@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LT.Framework.Exam.Dimain\LT.Framework.Exam.Domain.csproj" />
+    <ProjectReference Include="..\Saki.BaseRepository\Saki.Framework.BaseRepository.csproj" />
+    <ProjectReference Include="..\Saki.Framework.Mapster\Saki.Framework.Mapster.csproj" />
+    <ProjectReference Include="..\Saki.IBaseRepository\Saki.Framework.IBaseRepository.csproj" />
+    <ProjectReference Include="..\Saki.SqlSugar\Saki.SqlSugar.csproj" />
+  </ItemGroup>
+
+</Project>
