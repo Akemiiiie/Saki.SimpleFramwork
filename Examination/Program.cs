@@ -172,7 +172,8 @@ builder.Services.AddCors(options =>
         cors.WithOrigins(allowedOrigins)      // 配置文件里读取的多个域名
             .AllowAnyMethod()
             .AllowAnyHeader()
-            .AllowCredentials();              // 必须加
+            .AllowCredentials()             // 必须加
+        .WithExposedHeaders("Content-Disposition"); // 添加一个描述
     });
 });
 

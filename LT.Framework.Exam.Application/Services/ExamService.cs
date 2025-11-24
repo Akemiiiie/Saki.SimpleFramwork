@@ -123,6 +123,7 @@ namespace LT.Framework.Exam.Application.Services
         /// </summary>
         /// <param name="examId">作业Id</param>
         /// <returns></returns>
+        [AllowAnonymous]
         public async Task<IActionResult> GetExamInfoById(string examId)
         {
             // 获取考试信息
