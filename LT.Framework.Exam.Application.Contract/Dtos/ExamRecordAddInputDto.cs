@@ -19,6 +19,6 @@ namespace LT.Framework.Exam.Application.Contract.Dtos
         /// <summary>
         /// 考号
         /// </summary>
-        public required string StudentId { get; set; }
+        public string StudentId { get; set; }
     }
 }

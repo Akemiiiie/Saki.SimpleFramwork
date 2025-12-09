@@ -220,10 +220,11 @@ namespace LT.Framework.Exam.Application.Services
             }
             // 考试Id
             var examId = dto.First().ExamId;
-            var flage = await _examQuestionRepository.TranCompletedExamQuestion(examId,examQuestions);
+            var flage = await _examQuestionRepository.TranCompletedExamQuestion(examId, examQuestions);
+            var datas = await _examQuestionRepository.GetListAsync(t => t.ExamId == examId);
             if (flage)
             {
-                return Success(examQuestions.Adapt<List<ExamQuestionOutputDto>>());
+                return Success(datas.Adapt<List<ExamQuestionOutputDto>>());
             }
             else
             {
@@ -367,6 +368,11 @@ namespace LT.Framework.Exam.Application.Services
         [AllowAnonymous]
         public async Task<IActionResult> CommitExamAnswer(ExamAnswerCommitInputDto dto)
         {
+            if (dto == null)
+                return Fail("表单数据解析失败,请核验提交数据是否正确");
+            var checkMsg = dto.CheckSelf();
+            if (!string.IsNullOrEmpty(checkMsg))
+                return Fail(checkMsg);
             // 答题记录
             List<ExamAnswerEntity> details = dto.AnswerList.Adapt<List<ExamAnswerEntity>>();
             // 作废旧的答题数据

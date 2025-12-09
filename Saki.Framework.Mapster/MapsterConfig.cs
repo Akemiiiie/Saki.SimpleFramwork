@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Saki.Framework.Mapster
 {
-        /// <summary>
+    /// <summary>
     /// Mapster 全局映射配置类。
     /// 用于集中注册项目中所有自定义的对象映射规则，
     /// 避免映射逻辑分散在各处，提升可维护性与可测试性。
